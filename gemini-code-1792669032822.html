@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171915">
+<meta name="description" content="TATS — Sleek editorial brand for Mid-Century Furniture, Apparel, and Barber Tools.">
+<title>TATS — Crafted for Life</title>
+<!-- Tailwind CSS for utility styling -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bgDark: '#171915',
+          paper: '#e8e3d8',
+          paperMuted: '#d2cebe',
+          olive: '#a1a17b',
+          rust: '#c77655',
+          muted: '#aaa99d',
+          darkCard: '#21241f'
+        },
+        fontFamily: {
+          serif: ['Playfair Display', 'serif'],
+          sans: ['IBM Plex Sans Thai', 'DM Sans', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
+
+:root {
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+
+*{ box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  margin: 0;
+  background-color: #171915;
+  color: #e8e3d8;
+  font-family: 'IBM Plex Sans Thai', 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Subtle Film Grain Effect */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  opacity: .045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+}
+
+/* Scroll Progress Bar */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: #c77655;
+  width: 0%;
+  z-index: 50;
+  transition: width .08s linear;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #171915; }
+::-webkit-scrollbar-thumb { background: #34372e; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #a1a17b; }
+
+/* Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Category Filter Active Pill */
+.filter-btn {
+  transition: all 0.3s var(--ease);
+  border: 1px solid rgba(232, 227, 216, 0.2);
+}
+.filter-btn.active {
+  background-color: #e8e3d8;
+  color: #171915;
+  border-color: #e8e3d8;
+  font-weight: 500;
+}
+
+/* Card Hover Effects */
+.product-card .img-wrap img {
+  transition: transform 1.1s var(--ease), filter 0.6s var(--ease);
+}
+.product-card:hover .img-wrap img {
+  transform: scale(1.06);
+  filter: saturate(1.05) brightness(0.95);
+}
+
+/* Bookmark Pulse */
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.heart-pop {
+  animation: heartBeat 0.35s ease-in-out;
+}
+</style>
+</head>
+<body class="antialiased">
+
+  <!-- Grain Overlay -->
+  <div class="grain"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="progress" id="progress"></div>
+
+  <!-- Header / Navigation -->
+  <header class="fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-6 md:px-12 py-5 mix-blend-difference text-white">
+    <a href="#home" class="logo font-serif text-2xl tracking-widest font-semibold">
+      TATS
+      <small class="block font-sans text-[9px] tracking-[0.22em] font-normal text-paperMuted -mt-1">FURNITURE · APPAREL · BARBER</small>
+    </a>
+    
+    <nav class="hidden md:flex items-center gap-8 text-[11px] tracking-[0.18em] uppercase font-medium">
+      <a href="#furniture" class="hover:text-olive transition-colors">เฟอร์นิเจอร์</a>
+      <a href="#apparel" class="hover:text-olive transition-colors">เสื้อผ้า</a>
+      <a href="#barber" class="hover:text-olive transition-colors">อุปกรณ์ตัดผม</a>
+      <a href="#catalog" class="hover:text-olive transition-colors">คอลเลกชันทั้งหมด</a>
+      <a href="#contact" class="hover:text-olive transition-colors text-rust">ติดต่อเรา</a>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="flex items-center gap-4">
+      <button id="bookmarkFilterToggle" class="relative p-2 rounded-full border border-white/20 hover:border-white transition-colors" title="ดูรายการที่บันทึกไว้">
+        <svg id="bookmarkHeaderIcon" class="w-4 h-4 fill-none stroke-current stroke-[1.8]" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <span id="savedBadge" class="absolute -top-1 -right-1 bg-rust text-white text-[9px] w-4 h-4 rounded-full hidden items-center justify-center font-bold">0</span>
+      </button>
+
+      <button id="menuBtn" class="md:hidden border border-white/30 px-3 py-1.5 text-[10px] tracking-widest uppercase">
+        MENU ☰
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Dropdown Navigation -->
+  <div id="mobileNav" class="fixed inset-x-0 top-[68px] z-20 bg-bgDark border-b border-paper/10 p-6 flex flex-col gap-4 text-xs tracking-widest uppercase hidden md:hidden">
+    <a href="#furniture" class="mobile-link py-1 hover:text-olive">เฟอร์นิเจอร์</a>
+    <a href="#apparel" class="mobile-link py-1 hover:text-olive">เสื้อผ้า</a>
+    <a href="#barber" class="mobile-link py-1 hover:text-olive">อุปกรณ์ตัดผม</a>
+    <a href="#catalog" class="mobile-link py-1 hover:text-olive">คอลเลกชันทั้งหมด</a>
+    <a href="#contact" class="mobile-link py-1 text-rust">ติดต่อเรา</a>
+  </div>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero min-h-screen relative flex items-end overflow-hidden pb-16 pt-32 px-6 md:px-16" id="home">
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2200&q=90" 
+             alt="TATS Mid-century aesthetic" 
+             class="w-full h-full object-cover scale-105 brightness-[0.58] contrast-[0.95]">
+      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-bgDark via-bgDark/40 to-transparent z-0"></div>
+
+      <div class="relative z-10 max-w-4xl">
+        <div class="inline-flex items-center gap-3 text-olive text-[11px] tracking-[0.25em] uppercase font-semibold mb-4">
+          <span class="w-8 h-[1px] bg-current"></span>
+          Crafted Editorial Journal · Issue 001
+        </div>
+        <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl leading-[0.92] tracking-tight mb-6">
+          TATS.<br><span class="italic font-normal text-paperMuted">Crafted</span> for Life.
+        </h1>
+        <p class="max-w-xl text-paperMuted text-sm md:text-base leading-relaxed mb-8">
+          คัดสรรชิ้นงานอย่างพิถีพิถันจาก 3 คอลเลกชันหลัก: **เฟอร์นิเจอร์** ทรงคลาสสิก, **เสื้อผ้า** ดีไซน์เหนือกาลเวลา และ **อุปกรณ์ตัดผม** ระดับมืออาชีพที่ผสานคุณค่าและดีไซน์อย่างลงตัว
+        </p>
+
+        <div class="flex flex-wrap items-center gap-6">
+          <a href="#catalog" class="px-7 py-3.5 rounded-full border border-paper/60 hover:bg-paper hover:text-bgDark transition
